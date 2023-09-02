@@ -1,0 +1,6 @@
+pyyaml
+stormshield.sns.sslclient
+scp
+pycrowdsec
+paramiko
+pytimeparse
