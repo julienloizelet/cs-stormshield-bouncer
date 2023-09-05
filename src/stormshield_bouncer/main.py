@@ -150,7 +150,7 @@ def run(config, cleanup=False):
         ]
 
         deleted_objects = [
-            f"crowdsec_ip_delete_{int(ip_address(ip))}={ip},resolve=static" for ip in deleted_ips
+            f"crowdsec_ip_{int(ip_address(ip))}={ip},resolve=static" for ip in deleted_ips
         ]
 
         try:
@@ -173,24 +173,18 @@ def run(config, cleanup=False):
                     ssh_connection=ssh_connection,
                     remote_path="/data/Main/ConfigFiles/objectgroup",
                     group_name="[CrowdsecDeleteGroup]",
-                    new_content=[f"crowdsec_ip_delete_{int(ip_address(ip))}" for ip in deleted_ips],
+                    new_content=[f"crowdsec_ip_{int(ip_address(ip))}" for ip in deleted_ips],
                 )
         finally:
             ssh_connection.close()
 
-        if deleted_ips:
-            run_api_commands(
-                config,
-                [
-                    "MONITOR ADDRESSLIST ADD Type=BlackList Name1=Crowdsec Timeout=100000",
-                    "MONITOR ADDRESSLIST DELETE Type=BlackList Name1=CrowdsecDeleteGroup",
-                ],
-            )
-        else:
-            run_api_commands(
-                config, ["MONITOR ADDRESSLIST ADD Type=BlackList Name1=Crowdsec Timeout=100000"]
-            )
-
+        run_api_commands(
+            config,
+            [
+                "MONITOR ADDRESSLIST ADD Type=BlackList Name1=Crowdsec Timeout=100000",
+                "MONITOR ADDRESSLIST DELETE Type=BlackList Name1=CrowdsecDeleteGroup",
+            ],
+        )
         current_ip_state = new_ip_state
         sleep(config["crowdsec"]["update_frequency"])
 
