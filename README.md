@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/crowdsecurity/crowdsec-stormshield-bouncer/raw/main/docs/static/logo.png" alt="CrowdSec" title="CrowdSec" width="350" height="300" />
+<img src="https://raw.githubusercontent.com/crowdsecurity/cs-stormshield-bouncer/main/docs/static/logo.png" alt="CrowdSec" title="CrowdSec" width="300" height="300" />
 </p>
 <p align="center">
 <img src="https://img.shields.io/badge/build-pass-green">
